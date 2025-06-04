@@ -1,13 +1,5 @@
 "use strict";
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -22,14 +14,22 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 var scriptList = document.getElementById("scriptList");
 var content = document.getElementById("scriptContent");
 var title = document.getElementById("scriptTitle");
 var text = document.getElementById("scriptText");
 var form = document.getElementById("addScriptForm");
-var scripts = {};
 var categorySelect = document.getElementById("categorySelect");
-var newCategoryInput = document.getElementById("newCategory"); // Загрузка из localStorage
+var newCategoryInput = document.getElementById("newCategory");
+var scripts = {}; // Загрузка из localStorage или установка начальных данных
 
 function loadScripts() {
   var saved = localStorage.getItem("scripts");
@@ -37,7 +37,6 @@ function loadScripts() {
   if (saved) {
     scripts = JSON.parse(saved);
   } else {
-    // Начальные скрипты
     scripts = {
       greeting: {
         title: "Приветствие",
@@ -51,11 +50,36 @@ function loadScripts() {
       }
     };
   }
-}
+} // Сохранение в localStorage
+
 
 function saveScripts() {
   localStorage.setItem("scripts", JSON.stringify(scripts));
-}
+} // Обновление выпадающего списка категорий
+
+
+function updateCategorySelect() {
+  var categories = new Set();
+  Object.values(scripts).forEach(function (script) {
+    if (script.category) {
+      categories.add(script.category);
+    }
+  });
+  categorySelect.innerHTML = "<option value=\"\" disabled selected>\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E</option>";
+
+  _toConsumableArray(categories).sort().forEach(function (cat) {
+    var option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    categorySelect.appendChild(option);
+  });
+
+  var other = document.createElement("option");
+  other.value = "__custom__";
+  other.textContent = "Другая...";
+  categorySelect.appendChild(other);
+} // Отображение всех скриптов в списке
+
 
 function renderScripts() {
   scriptList.innerHTML = "";
@@ -73,27 +97,53 @@ function renderScripts() {
 
   for (var _i2 = 0, _Object$entries = Object.entries(grouped); _i2 < _Object$entries.length; _i2++) {
     var _Object$entries$_i = _slicedToArray(_Object$entries[_i2], 2),
-        _category = _Object$entries$_i[0],
+        category = _Object$entries$_i[0],
         items = _Object$entries$_i[1];
 
     var catHeader = document.createElement("h3");
-    catHeader.textContent = _category;
+    catHeader.textContent = category;
     catHeader.style.margin = "20px 0 10px";
     catHeader.style.fontWeight = "bold";
     scriptList.appendChild(catHeader);
     items.forEach(function (_ref3) {
       var key = _ref3.key,
           title = _ref3.title;
+      var container = document.createElement("div");
+      container.style.display = "flex";
+      container.style.justifyContent = "space-between";
+      container.style.alignItems = "center";
+      container.style.gap = "10px";
       var btn = document.createElement("button");
       btn.className = "script-button";
       btn.dataset.script = key;
       btn.textContent = title;
-      scriptList.appendChild(btn);
+      var delBtn = document.createElement("button");
+      delBtn.textContent = "✕";
+      delBtn.className = "delete-button";
+      delBtn.style.color = "red";
+      delBtn.style.border = "none";
+      delBtn.style.background = "transparent";
+      delBtn.style.cursor = "pointer";
+      delBtn.title = "Удалить скрипт";
+      delBtn.addEventListener("click", function (e) {
+        e.stopPropagation(); // чтобы не срабатывал клик по кнопке скрипта
+
+        if (confirm("\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0441\u043A\u0440\u0438\u043F\u0442 \"".concat(title, "\"?"))) {
+          delete scripts[key];
+          saveScripts();
+          renderScripts();
+          updateCategorySelect();
+        }
+      });
+      container.appendChild(btn);
+      container.appendChild(delBtn);
+      scriptList.appendChild(container);
     });
   }
 
   assignButtonHandlers();
-}
+} // Назначение обработчиков кнопок скриптов
+
 
 function assignButtonHandlers() {
   var buttons = document.querySelectorAll(".script-button");
@@ -117,42 +167,8 @@ function assignButtonHandlers() {
   if (buttons.length > 0 && !document.querySelector(".script-button.active")) {
     buttons[0].click();
   }
-} // Обработка формы добавления
+} // Показ/скрытие поля для новой категории
 
-
-var category = categorySelect.value === "__custom__" ? newCategoryInput.value.trim() : categorySelect.value;
-scripts[key] = {
-  title: titleInput.value,
-  category: category,
-  text: textInput.value
-}; // Инициализация
-
-loadScripts();
-renderScripts();
-
-function updateCategorySelect() {
-  var categories = new Set();
-  Object.values(scripts).forEach(function (script) {
-    if (script.category) {
-      categories.add(script.category);
-    }
-  }); // Очистка select
-
-  categorySelect.innerHTML = "<option value=\"\" disabled selected>\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E</option>"; // Добавляем существующие категории
-
-  _toConsumableArray(categories).sort().forEach(function (cat) {
-    var option = document.createElement("option");
-    option.value = cat;
-    option.textContent = cat;
-    categorySelect.appendChild(option);
-  }); // Добавляем пункт "Другая..."
-
-
-  var other = document.createElement("option");
-  other.value = "__custom__";
-  other.textContent = "Другая...";
-  categorySelect.appendChild(other);
-}
 
 categorySelect.addEventListener("change", function () {
   if (categorySelect.value === "__custom__") {
@@ -162,7 +178,8 @@ categorySelect.addEventListener("change", function () {
     newCategoryInput.style.display = "none";
     newCategoryInput.required = false;
   }
-});
+}); // Обработка формы добавления скрипта
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   var titleInput = document.getElementById("newTitle");
@@ -178,7 +195,10 @@ form.addEventListener("submit", function (e) {
   renderScripts();
   updateCategorySelect();
   form.reset();
-  newCategoryInput.style.display = "none"; // скрыть вручную введённую категорию
-
+  newCategoryInput.style.display = "none";
   newCategoryInput.required = false;
-});
+}); // Инициализация
+
+loadScripts();
+renderScripts();
+updateCategorySelect();

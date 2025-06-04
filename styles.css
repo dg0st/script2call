@@ -98,3 +98,7 @@ form button {
 form button:hover {
   background-color: #059669;
 }
+
+.delete-button:hover {
+  color: darkred;
+}

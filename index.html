@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Менеджер Скриптов</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Скрипты</h2>
+      <div id="scriptList"></div>
+    </div>
+    <div class="content" id="scriptContent">
+      <div class="script-title" id="scriptTitle"></div>
+      <div class="script-text" id="scriptText"></div>
+    </div>
+    <div class="sidebar">
+      <h2>Скрипты</h2>
+      <div id="scriptList"></div>
+
+      <hr />
+      <h3>Новый скрипт</h3>
+      <form id="addScriptForm">
+        <input type="text" id="newTitle" placeholder="Название" required />
+
+        <select id="categorySelect" required>
+          <option value="" disabled selected>Приветствие</option>
+        </select>
+        <input
+          type="text"
+          id="newCategory"
+          placeholder="Или введите новую категорию"
+          style="display: none"
+        />
+
+        <textarea
+          id="newText"
+          placeholder="Текст скрипта"
+          rows="4"
+          required
+        ></textarea>
+        <button type="submit">Добавить</button>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

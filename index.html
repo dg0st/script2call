@@ -12,9 +12,9 @@
         <nav class="nav">
           <a href="../index.html" class="logo"></a>
           <ul class="nav_menu">
-            <li><a href="">Главная</a></li>
+            <li><a href="./index.html">Главная</a></li>
             <li><a href="">О нас</a></li>
-            <li><a href="">Workspace</a></li>
+            <li><a href="./pages/workspace.html">Workspace</a></li>
             <li><a href="">Документация</a></li>
             <li><a href="">Контакты</a></li>
           </ul>
@@ -23,44 +23,10 @@
     </header>
 
     <div class="wrapper">
-      <div class="sidebar-left">
-        <h2>Скрипты</h2>
-        <div id="scriptList"></div>
-      </div>
-      <div class="content" id="scriptContent">
-        <div class="script-title" id="scriptTitle"></div>
-        <div class="script-text" id="scriptText"></div>
-      </div>
-      <div class="sidebar-right">
-        <h2>Скрипты</h2>
-        <div id="scriptList"></div>
-
-        <hr />
-        <h3>Новый скрипт</h3>
-        <form id="addScriptForm">
-          <input type="text" id="newTitle" placeholder="Название" required />
-
-          <select id="categorySelect" required>
-            <option value="" disabled selected>Приветствие</option>
-          </select>
-          <input
-            type="text"
-            id="newCategory"
-            placeholder="Или введите новую категорию"
-            style="display: none"
-          />
-
-          <textarea
-            id="newText"
-            placeholder="Текст скрипта"
-            rows="10"
-            required
-          ></textarea>
-          <button type="submit">Добавить</button>
-        </form>
+   
       </div>
 
-      <script src="./js/script.js"></script>
+      <script src="../js/script.js"></script>
     </div>
   </body>
 </html>

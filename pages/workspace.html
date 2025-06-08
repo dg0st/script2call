@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Менеджер Скриптов</title>
+    <link rel="stylesheet" href="../styles/workspace.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <a href="../index.html" class="logo"></a>
+          <ul class="nav_menu">
+            <li><a href="../index.html">Главная</a></li>
+            <li><a href="">О нас</a></li>
+            <li><a href="./workspace.html">Workspace</a></li>
+            <li><a href="">Документация</a></li>
+            <li><a href="">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrapper">
+      <div class="sidebar-left">
+        <h2>Скрипты</h2>
+        <div id="scriptList"></div>
+      </div>
+      <div class="content" id="scriptContent">
+        <div class="script-title" id="scriptTitle"></div>
+        <div class="script-text" id="scriptText"></div>
+      </div>
+      <div class="sidebar-right">
+        <h2>Скрипты</h2>
+        <div id="scriptList"></div>
+
+        <hr />
+        <h3>Новый скрипт</h3>
+        <form id="addScriptForm">
+          <input type="text" id="newTitle" placeholder="Название" required />
+
+          <select id="categorySelect" required>
+            <option value="" disabled selected>Приветствие</option>
+          </select>
+          <input
+            type="text"
+            id="newCategory"
+            placeholder="Или введите новую категорию"
+            style="display: none"
+          />
+
+          <textarea
+            id="newText"
+            placeholder="Текст скрипта"
+            rows="10"
+            required
+          ></textarea>
+          <button type="submit">Добавить</button>
+        </form>
+      </div>
+
+      <script src="../js//workspace.js"></script>
+    </div>
+  </body>
+</html>

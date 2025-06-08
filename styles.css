@@ -79,8 +79,8 @@ html, body {
   margin: 0;
 }
 
-.sidebar {
-  width: 300px;
+.sidebar-left {
+  width: 500px;
   min-width: 250px;
   max-width: 400px;
   background-color: #f1f5f9;
@@ -89,6 +89,16 @@ html, body {
   overflow-y: auto;
   flex-shrink: 0;
 }
+
+.sidebar-right {
+  width: 500px;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  padding: 20px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
 
 .sidebar h2 {
   font-size: 20px;

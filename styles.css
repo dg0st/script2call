@@ -22,15 +22,16 @@ html, body {
 
 .wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 100vh;
+  width: 100%;
 }
 
 .content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+  padding: 40px;
+  overflow-y: auto;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .container {
@@ -42,17 +43,14 @@ html, body {
 .logo {
   font-size: 24px;
   font-weight: bold;
-  text-decoration: none;
-  color: black;
-  justify-content: left;
-  margin-top: 35px;
+  margin-bottom: 10px;
 }
 
 .nav {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
+  flex-direction: column; 
+  align-items: center;    
+  padding: 20px;
   border-bottom: 1px solid #ccc;
 }
 
@@ -66,28 +64,30 @@ html, body {
 }
 
 .nav_menu a:hover {
-  color: red;
+  color: rgb(19, 151, 30);
   text-decoration: underline;
 }
 
 .nav_menu {
   display: flex;
-  flex-direction: row;
-  justify-content: right;
-  align-items: flex-start;
-  gap: 15px;
-  margin-top: 35px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   list-style: none;
-  font-size: 24px;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
 }
 
-
 .sidebar {
-  width: 500px;
+  width: 300px;
+  min-width: 250px;
+  max-width: 400px;
   background-color: #f1f5f9;
   border-right: 1px solid #ccc;
   padding: 20px;
   overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .sidebar h2 {

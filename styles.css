@@ -11,7 +11,7 @@ body {
 }
 
 .sidebar {
-  width: 250px;
+  width: 500px;
   background-color: #f1f5f9;
   border-right: 1px solid #ccc;
   padding: 20px;
@@ -37,7 +37,7 @@ body {
 }
 
 .script-button.active {
-  background-color: #3b82f6;
+  background-color: rgb(6, 114, 6);
   color: white;
 }
 
@@ -77,7 +77,7 @@ form {
 }
 
 form input, form textarea {
-  padding: 8px;
+  padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -96,7 +96,7 @@ form button {
 }
 
 form button:hover {
-  background-color: #059669;
+  background-color: rgb(0, 252, 0);
 }
 
 .delete-button:hover {

@@ -77,29 +77,40 @@ function renderScripts() {
     catHeader.style.fontWeight = "bold";
     scriptList.appendChild(catHeader);
 
-    items.forEach(({ key, title }) => {
+    items.forEach(({ key, title, text, category }) => {
       const container = document.createElement("div");
       container.style.display = "flex";
-      container.style.justifyContent = "space-between";
-      container.style.alignItems = "center";
-      container.style.gap = "10px";
+      container.style.flexDirection = "column";
+      container.style.marginBottom = "10px";
+    
+      const header = document.createElement("div");
+      header.style.display = "flex";
+      header.style.justifyContent = "space-between";
+      header.style.alignItems = "center";
     
       const btn = document.createElement("button");
       btn.className = "script-button";
       btn.dataset.script = key;
       btn.textContent = title;
     
+      const actions = document.createElement("div");
+      actions.style.display = "flex";
+      actions.style.gap = "8px";
+    
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "✎";
+      editBtn.title = "Редактировать";
+      editBtn.style.cursor = "pointer";
+    
       const delBtn = document.createElement("button");
       delBtn.textContent = "✕";
-      delBtn.className = "delete-button";
+      delBtn.title = "Удалить";
       delBtn.style.color = "red";
-      delBtn.style.border = "none";
-      delBtn.style.background = "transparent";
       delBtn.style.cursor = "pointer";
-      delBtn.title = "Удалить скрипт";
     
+      // Удаление
       delBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // чтобы не срабатывал клик по кнопке скрипта
+        e.stopPropagation();
         if (confirm(`Удалить скрипт "${title}"?`)) {
           delete scripts[key];
           saveScripts();
@@ -108,10 +119,20 @@ function renderScripts() {
         }
       });
     
-      container.appendChild(btn);
-      container.appendChild(delBtn);
+      // Редактирование
+      editBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        showEditForm(key);
+      });
+    
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+    
+      header.appendChild(btn);
+      header.appendChild(actions);
+      container.appendChild(header);
       scriptList.appendChild(container);
-    });
+    });    
     
   }
 
@@ -188,3 +209,41 @@ form.addEventListener("submit", e => {
 loadScripts();
 renderScripts();
 updateCategorySelect();
+
+// Редактирование
+
+function showEditForm(key) {
+  const script = scripts[key];
+  const container = document.querySelector(`button[data-script="${key}"]`).closest("div");
+
+  const form = document.createElement("form");
+  form.style.marginTop = "10px";
+
+  form.innerHTML = `
+    <input type="text" name="title" value="${script.title}" placeholder="Заголовок" style="width: 100%; margin-bottom: 5px;" required>
+    <textarea name="text" placeholder="Текст скрипта" rows="4" style="width: 100%; margin-bottom: 5px;" required>${script.text}</textarea>
+    <button type="submit">💾 Сохранить</button>
+    <button type="button" id="cancelEdit">Отмена</button>
+  `;
+
+  container.appendChild(form);
+
+  const cancelBtn = form.querySelector("#cancelEdit");
+  cancelBtn.addEventListener("click", () => {
+    renderScripts();
+    updateCategorySelect();
+  });
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const title = form.title.value.trim();
+    const text = form.text.value.trim();
+
+    scripts[key].title = title;
+    scripts[key].text = text;
+
+    saveScripts();
+    renderScripts();
+    updateCategorySelect();
+  });
+}

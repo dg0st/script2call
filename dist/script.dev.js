@@ -107,26 +107,36 @@ function renderScripts() {
     scriptList.appendChild(catHeader);
     items.forEach(function (_ref3) {
       var key = _ref3.key,
-          title = _ref3.title;
+          title = _ref3.title,
+          text = _ref3.text,
+          category = _ref3.category;
       var container = document.createElement("div");
       container.style.display = "flex";
-      container.style.justifyContent = "space-between";
-      container.style.alignItems = "center";
-      container.style.gap = "10px";
+      container.style.flexDirection = "column";
+      container.style.marginBottom = "10px";
+      var header = document.createElement("div");
+      header.style.display = "flex";
+      header.style.justifyContent = "space-between";
+      header.style.alignItems = "center";
       var btn = document.createElement("button");
       btn.className = "script-button";
       btn.dataset.script = key;
       btn.textContent = title;
+      var actions = document.createElement("div");
+      actions.style.display = "flex";
+      actions.style.gap = "8px";
+      var editBtn = document.createElement("button");
+      editBtn.textContent = "✎";
+      editBtn.title = "Редактировать";
+      editBtn.style.cursor = "pointer";
       var delBtn = document.createElement("button");
       delBtn.textContent = "✕";
-      delBtn.className = "delete-button";
+      delBtn.title = "Удалить";
       delBtn.style.color = "red";
-      delBtn.style.border = "none";
-      delBtn.style.background = "transparent";
-      delBtn.style.cursor = "pointer";
-      delBtn.title = "Удалить скрипт";
+      delBtn.style.cursor = "pointer"; // Удаление
+
       delBtn.addEventListener("click", function (e) {
-        e.stopPropagation(); // чтобы не срабатывал клик по кнопке скрипта
+        e.stopPropagation();
 
         if (confirm("\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0441\u043A\u0440\u0438\u043F\u0442 \"".concat(title, "\"?"))) {
           delete scripts[key];
@@ -134,9 +144,17 @@ function renderScripts() {
           renderScripts();
           updateCategorySelect();
         }
+      }); // Редактирование
+
+      editBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        showEditForm(key);
       });
-      container.appendChild(btn);
-      container.appendChild(delBtn);
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+      header.appendChild(btn);
+      header.appendChild(actions);
+      container.appendChild(header);
       scriptList.appendChild(container);
     });
   }
@@ -201,4 +219,28 @@ form.addEventListener("submit", function (e) {
 
 loadScripts();
 renderScripts();
-updateCategorySelect();
+updateCategorySelect(); // Редактирование
+
+function showEditForm(key) {
+  var script = scripts[key];
+  var container = document.querySelector("button[data-script=\"".concat(key, "\"]")).closest("div");
+  var form = document.createElement("form");
+  form.style.marginTop = "10px";
+  form.innerHTML = "\n    <input type=\"text\" name=\"title\" value=\"".concat(script.title, "\" placeholder=\"\u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A\" style=\"width: 100%; margin-bottom: 5px;\" required>\n    <textarea name=\"text\" placeholder=\"\u0422\u0435\u043A\u0441\u0442 \u0441\u043A\u0440\u0438\u043F\u0442\u0430\" rows=\"4\" style=\"width: 100%; margin-bottom: 5px;\" required>").concat(script.text, "</textarea>\n    <button type=\"submit\">\uD83D\uDCBE \u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C</button>\n    <button type=\"button\" id=\"cancelEdit\">\u041E\u0442\u043C\u0435\u043D\u0430</button>\n  ");
+  container.appendChild(form);
+  var cancelBtn = form.querySelector("#cancelEdit");
+  cancelBtn.addEventListener("click", function () {
+    renderScripts();
+    updateCategorySelect();
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var title = form.title.value.trim();
+    var text = form.text.value.trim();
+    scripts[key].title = title;
+    scripts[key].text = text;
+    saveScripts();
+    renderScripts();
+    updateCategorySelect();
+  });
+}

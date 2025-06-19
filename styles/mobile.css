@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+  .contact-form .row {
+    flex-direction: column;
+  }
+
+  .footer-columns {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .column {
+    margin-bottom: 20px;
+  }
+}

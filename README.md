@@ -1,24 +1,26 @@
 # Script2Call
 
-**Script2Call** — это инструмент с открытым исходным кодом, разработанный для операторов колл-центров.
+[Русский](./docs/README_RU.md) [Spanish](./docs/README_ES.md)
 
-Во многих КЦ скрипты до сих пор хранятся в Word-файлах или Google Docs, что делает работу медленной и неудобной. Этот инструмент позволяет перенести скрипты в удобный интерфейс с разбивкой по категориям, что значительно ускоряет работу и снижает утомляемость.
+**Script2Call** is an open source tool designed for call center operators.
 
-## Что планируется реализовать
+Many call centers still store scripts in Word files or Google Docs, making work slow and inconvenient. This tool allows you to transfer scripts to a convenient interface with a breakdown by categories, which significantly speeds up work and reduces fatigue.
 
-- Менеджер скриптов
-(***Возможность импорта текстовых файлов, чтобы избежать ручного ввода скриптов.***)
+## What is planned to be implemented
 
-- Голосовые шаблоны
-(***Запись голоса оператора с возможностью назначения клавиш. Это позволит включать заранее записанные фразы и снизить нагрузку на голосовые связки. все, кто работал 4–6 часов подряд в КЦ — поймут***)
+- Script manager
+  (**_Ability to import text files to avoid manual script entry._**)
 
-- Блокировщик тайм-трекеров
-(***Маскировка активности в системах мониторинга работодателя — для снижения давления и повышения комфорта при работе.***)
+- Voice templates
+  (**_Operator voice recording with the ability to assign keys. This will allow you to include pre-recorded phrases and reduce the load on the vocal cords. Anyone who has worked 4-6 hours in a row in a call center will understand_**)
 
-- Модульная архитектура
-(***Интерфейс будет поддерживать плагины и виджеты для расширения функциональности под кастомные задачи.***)
+- Time tracker blocker
+  (**_Masking activity in employer monitoring systems - to reduce pressure and increase comfort at work._**)
 
-## Примечание
+- Modular architecture
+  (**_The interface will support plugins and widgets to expand functionality for custom tasks._**)
 
-Разработка ведётся в свободное время и не является приоритетной. Однако планируемые функции будут постепенно внедряться.
-Если вам интересна тема автоматизации в колл-центрах — подписывайтесь на репозиторий и следите за обновлениями.
+## Note
+
+Development is carried out in free time and is not a priority. However, the planned functions will be gradually implemented.
+If you are interested in the topic of automation in call centers, subscribe to the repository and follow the updates.

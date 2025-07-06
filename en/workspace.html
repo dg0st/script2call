@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Script Manager</title>
+    <link rel="stylesheet" href="../styles/workspace.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <a href="../index.html" class="logo"></a>
+          <ul class="nav_menu">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">Docs</a></li>
+            <li><a href="">Contacts</a></li>
+            <li><a href="../pages/workspace.html">RU</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrapper">
+      <div class="sidebar-left">
+        <h2>Scripts</h2>
+        <div id="scriptList"></div>
+      </div>
+      <div class="content" id="scriptContent">
+        <div class="script-title" id="scriptTitle"></div>
+        <div class="script-text" id="scriptText"></div>
+      </div>
+      <div class="sidebar-right">
+        <h2>Scripts</h2>
+        <div id="scriptList"></div>
+
+        <hr />
+        <h3>New Script</h3>
+        <form id="addScriptForm">
+          <input type="text" id="newTitle" placeholder="Название" required />
+
+          <select id="categorySelect" required>
+            <option value="" disabled selected>Greetings</option>
+          </select>
+          <input
+            type="text"
+            id="newCategory"
+            placeholder="Или введите новую категорию"
+            style="display: none"
+          />
+
+          <textarea
+            id="newText"
+            placeholder="Текст скрипта"
+            rows="10"
+            required
+          ></textarea>
+          <button type="submit">Add</button>
+        </form>
+      </div>
+
+      <script src="../js/workspace.js"></script>
+    </div>
+  </body>
+</html>
